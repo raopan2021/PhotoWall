@@ -42,6 +42,7 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@unocss/eslint-plugin": "^66.3.3",
+    "@unocss/transformer-compile-class": "^66.3.3",
     "@vitejs/plugin-react-swc": "^3.10.2",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.31.0",

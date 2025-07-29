@@ -90,7 +90,7 @@ const App: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-start h-[100vh] px-[300px] py-[10px]">
+      <div className="flex items-start justify-center px-[300px] py-[10px] h-[100vh]">
         <Grid container wrap="wrap" spacing={2}>
           {Array.from(Array.from({ length: 30 })).map((_, index) => (
             <Skeleton key={index} variant="rectangular" width={150} height={200} />
@@ -104,10 +104,10 @@ const App: React.FC = () => {
     <div className="flex flex-col">
       {dates.map(date => (
         <div
-          className="flex w-full box-border gap-[10px] sm:px-[50px] md:px-[100px] lg:px-[150px] xl:px-[200px] 2xl:px-[300px] my-[20px]"
+          className="flex gap-[10px] w-full my-[20px] box-border 2xl:px-[300px] lg:px-[150px] md:px-[100px] sm:px-[50px] xl:px-[200px]"
           key={date}
         >
-          <div className="w-auto text-right pr-[30px]">{dayjs(date).format("YYYY-MM-DD")}</div>
+          <div className="text-right w-auto pr-[30px]">{dayjs(date).format("YYYY-MM-DD")}</div>
 
           <ImageList className="flex-1" variant="quilted" cols={8} sx={{ transform: "translateZ(0)" }}>
             {datephotos[date]?.map((photo: Image.Info) => {
@@ -115,7 +115,7 @@ const App: React.FC = () => {
               const imageSize = photo.featured ? "mid" : "min";
 
               return (
-                <ImageListItem key={photo.fullName} cols={cols} rows={rows} className="group relative">
+                <ImageListItem key={photo.fullName} cols={cols} rows={rows} className="relative group">
                   <img
                     {...srcset(
                       `${import.meta.env.BASE_URL}/photos/${imageSize}/${photo.fullName}`,
@@ -137,7 +137,7 @@ const App: React.FC = () => {
                   />
 
                   <ZoomOutMapIcon
-                    className="absolute top-[10px] right-[10px] text-black opacity-0 group-hover:opacity-100 transition-opacity duration-600 cursor-pointer"
+                    className="absolute right-[10px] top-[10px] cursor-pointer text-black opacity-0 transition-opacity duration-600 group-hover:opacity-100"
                     style={{
                       color: "#fff",
                       textShadow: "0 2px 4px rgba(0,0,0,0.8)",

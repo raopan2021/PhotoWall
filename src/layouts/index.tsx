@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import { Outlet } from "react-router";
 import ToggleColorMode from "@/components/header/ToggleColorMode";
 
-export default () => {
+const App: React.FC = () => {
   return (
     <Box
       sx={{
@@ -27,3 +27,5 @@ export default () => {
     </Box>
   );
 };
+
+export default App;

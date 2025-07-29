@@ -156,7 +156,7 @@ const App: React.FC = () => {
       className="bg-transparent"
     >
       <Box
-        className="relative flex justify-center items-start bg-transparent h-full"
+        className="bg-transparent relative flex justify-center items-start h-full"
         role="presentation"
         sx={{
           overflow: "visible",
@@ -207,13 +207,13 @@ const App: React.FC = () => {
           }}
         >
           <div
-            className="flex flex-col text-right py-[20px] text-[18px] gap-[30px] justify-start items-end"
+            className="flex flex-col text-right items-end justify-start gap-[30px] py-[20px] text-[18px]"
             style={{
               color: textColor,
               textShadow: textColor === "white" ? "0 2px 4px rgba(0,0,0,0.8)" : "0 2px 4px rgba(255,255,255,0.8)",
             }}
           >
-            <div className="flex gap-[10px] justify-start items-end">
+            <div className="flex items-end justify-start gap-[10px]">
               <span className="cursor-pointer" onClick={() => prev()}>
                 PREV
               </span>
@@ -223,14 +223,14 @@ const App: React.FC = () => {
               </span>
             </div>
 
-            <span className="flex gap-[10px] justify-center items-center">
+            <span className="flex justify-center gap-[10px] items-center">
               <RawOnIcon />
               {" "}
               原图
               <Switch checked={isOriginPic} onChange={() => setIsOriginPic(!isOriginPic)} />
             </span>
 
-            <span className="flex gap-[10px] justify-center items-center">
+            <span className="flex items-center justify-center gap-[10px]">
               <FlipIcon
                 style={{
                   transform: flip ? "scaleX(-1)" : "none", // 水平翻转
@@ -242,9 +242,9 @@ const App: React.FC = () => {
               <Switch checked={flip} onChange={() => setFlip(!flip)} />
             </span>
 
-            <div className="flex flex-col gap-[10px] justify-start items-end">{imageInfo?.fullName}</div>
+            <div className="flex flex-col items-end justify-start gap-[10px]">{imageInfo?.fullName}</div>
 
-            <div className="flex flex-col gap-[10px] justify-start items-end">
+            <div className="flex flex-col items-end justify-start gap-[10px]">
               {[imageInfo?.camera?.make, imageInfo?.camera?.model, imageInfo?.camera?.lens].map(item => (
                 <span className="block" key={item}>
                   {item}
@@ -252,7 +252,7 @@ const App: React.FC = () => {
               ))}
             </div>
 
-            <div className="flex flex-col gap-[10px] justify-start items-end">
+            <div className="flex flex-col items-end justify-start gap-[10px]">
               {[
                 `${new Fraction(imageInfo?.exposure?.exposureTime).toFraction(true)}s`,
                 `ƒ/${imageInfo?.exposure?.fNumber}`,
@@ -265,7 +265,7 @@ const App: React.FC = () => {
               ))}
             </div>
 
-            <div className="flex flex-col gap-[10px] justify-start items-end">
+            <div className="flex flex-col items-end justify-start gap-[10px]">
               {dayjs(imageInfo?.dateTime).format("YYYY-MM-DD A h:mm:ss")}
             </div>
           </div>

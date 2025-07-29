@@ -1,5 +1,11 @@
-import { defineConfig } from 'unocss'
+import { defineConfig, presetAttributify, transformerAttributifyJsx, transformerVariantGroup } from 'unocss'
+import transformerCompileClass from '@unocss/transformer-compile-class'
 
 export default defineConfig({
-  // ...UnoCSS options
+  presets: [
+    presetAttributify(),
+  ],
+  transformers: [
+    transformerCompileClass(),
+  ]
 })
