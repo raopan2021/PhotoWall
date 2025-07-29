@@ -11,15 +11,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import usePicStore from "@/stores/image";
 
 const App: React.FC = () => {
-  const {
-    showPicDrawer,
-    exchangeShowPicDrawer,
-    clearMidPic,
-    imageInfo,
-    setImageInfo,
-    dates,
-    datephotos,
-  } = usePicStore();
+  const { showPicDrawer, exchangeShowPicDrawer, clearMidPic, imageInfo, setImageInfo, dates, datephotos } =
+    usePicStore();
   const [imgSize, setImgSize] = useState({ width: 0, height: 0 });
 
   // 在 img 的 onLoad 中确保尺寸只设置一次
@@ -39,15 +32,10 @@ const App: React.FC = () => {
   };
 
   // 计算抽屉宽度（不超过视口的80%）
-  const drawerWidth = Math.min(
-    imgSize.width * (window.innerHeight / imgSize.height),
-    window.innerWidth * 0.8
-  );
+  const drawerWidth = Math.min(imgSize.width * (window.innerHeight / imgSize.height), window.innerWidth * 0.8);
 
   // #region 照片具体信息 是否显示 popover 按钮
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null
-  );
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -74,12 +62,10 @@ const App: React.FC = () => {
     }
     // 处理跨日期情况
     const currentDateIndex = dates.indexOf(currentDate);
-    const prevDateIndex =
-      currentDateIndex > 0 ? currentDateIndex - 1 : dates.length - 1;
+    const prevDateIndex = currentDateIndex > 0 ? currentDateIndex - 1 : dates.length - 1;
     const prevDate = dates[prevDateIndex];
     const prevPhotos = getPhotosByDate(prevDate);
-    if (prevPhotos.length > 0)
-      setImageInfoWithTransition(prevPhotos[prevPhotos.length - 1]);
+    if (prevPhotos.length > 0) setImageInfoWithTransition(prevPhotos[prevPhotos.length - 1]);
   };
   const next = () => {
     const currentDate = dayjs(imageInfo?.dateTime).format("YYYY-MM-DD");
@@ -93,8 +79,7 @@ const App: React.FC = () => {
     }
     // 处理跨日期情况
     const currentDateIndex = dates.indexOf(currentDate);
-    const nextDateIndex =
-      currentDateIndex < dates.length - 1 ? currentDateIndex + 1 : 0;
+    const nextDateIndex = currentDateIndex < dates.length - 1 ? currentDateIndex + 1 : 0;
     const nextDate = dates[nextDateIndex];
     const nextPhotos = getPhotosByDate(nextDate);
     if (nextPhotos.length > 0) setImageInfoWithTransition(nextPhotos[0]);
@@ -110,9 +95,7 @@ const App: React.FC = () => {
   // #endregion
 
   const [textColor, setTextColor] = useState("white");
-  const handleTextColor = async (
-    e: React.SyntheticEvent<HTMLImageElement, Event>
-  ) => {
+  const handleTextColor = async (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     const img = e.currentTarget;
     // 确保图片已完全加载
     if (!img.complete || img.naturalWidth === 0) {
@@ -174,9 +157,7 @@ const App: React.FC = () => {
         }}
       >
         <img
-          src={`/photos/${isOriginPic ? "origin" : "mid"}/${
-            imageInfo?.fullName
-          }`}
+          src={`${import.meta.env.BASE_URL}/photos/${isOriginPic ? "origin" : "mid"}/${imageInfo?.fullName}`}
           alt={imageInfo?.fullName}
           width={imgSize.width}
           height={imgSize.height}
@@ -221,10 +202,7 @@ const App: React.FC = () => {
             className="py-[20px] text-[18px] flex flex-col gap-[30px] justify-start items-end text-right"
             style={{
               color: textColor,
-              textShadow:
-                textColor === "white"
-                  ? "0 2px 4px rgba(0,0,0,0.8)"
-                  : "0 2px 4px rgba(255,255,255,0.8)",
+              textShadow: textColor === "white" ? "0 2px 4px rgba(0,0,0,0.8)" : "0 2px 4px rgba(255,255,255,0.8)",
             }}
           >
             <div className="flex gap-[10px] justify-start items-end">
@@ -239,10 +217,7 @@ const App: React.FC = () => {
 
             <span className="flex gap-[10px] justify-center items-center">
               <RawOnIcon /> 原图
-              <Switch
-                checked={isOriginPic}
-                onChange={() => setIsOriginPic(!isOriginPic)}
-              />
+              <Switch checked={isOriginPic} onChange={() => setIsOriginPic(!isOriginPic)} />
             </span>
 
             <span className="flex gap-[10px] justify-center items-center">
@@ -256,16 +231,10 @@ const App: React.FC = () => {
               <Switch checked={flip} onChange={() => setFlip(!flip)} />
             </span>
 
-            <div className="flex flex-col gap-[10px] justify-start items-end">
-              {imageInfo?.fullName}
-            </div>
+            <div className="flex flex-col gap-[10px] justify-start items-end">{imageInfo?.fullName}</div>
 
             <div className="flex flex-col gap-[10px] justify-start items-end">
-              {[
-                imageInfo?.camera?.make,
-                imageInfo?.camera?.model,
-                imageInfo?.camera?.lens,
-              ].map((item) => (
+              {[imageInfo?.camera?.make, imageInfo?.camera?.model, imageInfo?.camera?.lens].map((item) => (
                 <span className="block" key={item}>
                   {item}
                 </span>
@@ -274,9 +243,7 @@ const App: React.FC = () => {
 
             <div className="flex flex-col gap-[10px] justify-start items-end">
               {[
-                new Fraction(imageInfo?.exposure?.exposureTime).toFraction(
-                  true
-                ) + "s",
+                new Fraction(imageInfo?.exposure?.exposureTime).toFraction(true) + "s",
                 "ƒ/" + imageInfo?.exposure?.fNumber,
                 "ISO " + imageInfo?.exposure?.iso,
                 imageInfo?.exposure?.focalLength + "mm",

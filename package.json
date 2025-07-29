@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "build": "vite build",
     "preview": "vite preview",
+    "tsc": "tsc -b",
+    "lint": "eslint .",
     "pic": "node ./handlePicTool/photoCompression/index.js && node ./handlePicTool/getpicInfo.js"
   },
   "dependencies": {

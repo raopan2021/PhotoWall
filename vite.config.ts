@@ -22,5 +22,7 @@ export default defineConfig({
     alias: {
       '@': '/src',
     }
-  }
+  },
+
+  base: '/PhotoWall/', // 设置基础路径为相对路径，用于设置 GitHub Pages
 })

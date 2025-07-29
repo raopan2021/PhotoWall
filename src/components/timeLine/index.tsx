@@ -32,14 +32,7 @@ function groupByDate(items: any[]) {
   }, {} as Record<string, Image.Info[]>);
 }
 
-function srcset(
-  image: string,
-  size: number,
-  rows = 1,
-  cols = 1,
-  originalWidth?: number,
-  originalHeight?: number
-) {
+function srcset(image: string, size: number, rows = 1, cols = 1, originalWidth?: number, originalHeight?: number) {
   // 如果有原始尺寸，按比例计算
   if (originalWidth && originalHeight) {
     const originalRatio = originalWidth / originalHeight;
@@ -64,15 +57,8 @@ function srcset(
 }
 
 const App: React.FC = () => {
-  const {
-    dates,
-    initDates,
-    datephotos,
-    initDatesPhotos,
-    setDatePhotoFeatured,
-    exchangeShowPicDrawer,
-    setImageInfo,
-  } = usePicStore();
+  const { dates, initDates, datephotos, initDatesPhotos, setDatePhotoFeatured, exchangeShowPicDrawer, setImageInfo } =
+    usePicStore();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -103,12 +89,7 @@ const App: React.FC = () => {
       <div className="flex justify-center items-start h-[100vh] px-[300px] py-[10px]">
         <Grid container wrap="wrap" spacing={2}>
           {Array.from(new Array(30)).map((_, index) => (
-            <Skeleton
-              key={index}
-              variant="rectangular"
-              width={150}
-              height={200}
-            />
+            <Skeleton key={index} variant="rectangular" width={150} height={200} />
           ))}
         </Grid>
       </div>
@@ -122,30 +103,18 @@ const App: React.FC = () => {
           className="box-border flex gap-[10px] w-full sm:px-[50px] md:px-[100px] lg:px-[150px] xl:px-[200px] 2xl:px-[300px] my-[20px]"
           key={date}
         >
-          <div className="w-auto text-right pr-[30px]">
-            {dayjs(date).format("YYYY-MM-DD")}
-          </div>
+          <div className="w-auto text-right pr-[30px]">{dayjs(date).format("YYYY-MM-DD")}</div>
 
-          <ImageList
-            className="flex-1"
-            variant="quilted"
-            cols={8}
-            sx={{ transform: "translateZ(0)" }}
-          >
+          <ImageList className="flex-1" variant="quilted" cols={8} sx={{ transform: "translateZ(0)" }}>
             {datephotos[date]?.map((photo: Image.Info) => {
               const { cols, rows } = getPhotoLayout(photo);
               const imageSize = photo.featured ? "mid" : "min";
 
               return (
-                <ImageListItem
-                  key={photo.fullName}
-                  cols={cols}
-                  rows={rows}
-                  className="group relative"
-                >
+                <ImageListItem key={photo.fullName} cols={cols} rows={rows} className="group relative">
                   <img
                     {...srcset(
-                      `/photos/${imageSize}/${photo.fullName}`,
+                      `${import.meta.env.BASE_URL}/photos/${imageSize}/${photo.fullName}`,
                       100,
                       rows,
                       cols,
