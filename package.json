@@ -16,6 +16,7 @@
     "@mui/icons-material": "^7.2.0",
     "@mui/material": "^7.2.0",
     "@unocss/reset": "^66.3.3",
+    "ahooks": "^3.9.0",
     "axios": "^1.11.0",
     "dayjs": "^1.11.13",
     "exif-parser": "^0.1.12",
@@ -27,6 +28,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-masonry-css": "^1.0.16",
+    "react-router": "^7.7.1",
     "sass": "^1.89.2",
     "sharp": "^0.34.3",
     "zustand": "^5.0.6"
