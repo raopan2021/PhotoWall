@@ -10,7 +10,7 @@
     "tsc": "tsc -b",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "pic": "node ./handlePicTool/photoCompression/index.js && node ./handlePicTool/getpicInfo.js"
+    "pic": "node ./handlePicTool/getpicInfo.js && node ./handlePicTool/photoCompression/index.js"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

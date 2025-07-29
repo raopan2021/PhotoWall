@@ -75,8 +75,9 @@ async function getLocationInfo(gps) {
  */
 async function processImage(file) {
   const filePath = path.join(ORIGIN_DIR, file);
-  const fileExt = path.extname(file).toLowerCase();
-  const fileName = path.basename(file, fileExt);
+  const originalExt = path.extname(file); // Keep original case for matching
+  const fileExt = originalExt.toLowerCase();
+  const fileName = path.basename(file, originalExt); // Use original extension for removal
 
   try {
     const [stats, metadata, exif] = await Promise.all([
@@ -107,18 +108,18 @@ async function processImage(file) {
       },
       fileSize: stats.size,
       camera: {
-        make: exif.Make,
-        model: exif.Model,
-        lens: exif.LensModel,
+        make: exif?.Make || "",
+        model: exif?.Model || "",
+        lens: exif?.LensModel || "",
       },
       exposure: {
-        exposureTime: exif.ExposureTime,
-        fNumber: exif.FNumber,
-        iso: exif.ISO,
-        focalLength: exif.FocalLength,
+        exposureTime: exif?.ExposureTime,
+        fNumber: exif?.FNumber,
+        iso: exif?.ISO,
+        focalLength: exif?.FocalLength,
       },
-      dateTime: exif.DateTimeOriginal || exif.CreateDate,
-      gps: exif.gps || null,
+      dateTime: exif?.DateTimeOriginal || exif?.CreateDate,
+      gps: exif?.gps || null,
       location: locationInfo,
       colors: dominantColors,
       metadata: {

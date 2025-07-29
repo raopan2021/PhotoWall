@@ -118,7 +118,7 @@ const App: React.FC = () => {
                 <ImageListItem key={photo.fullName} cols={cols} rows={rows} className="relative group">
                   <img
                     {...srcset(
-                      `${import.meta.env.BASE_URL}/photos/${imageSize}/${photo.fullName}`,
+                      `${import.meta.env.BASE_URL}/photos/${imageSize}/${photo.fileName}.webp`,
                       100,
                       rows,
                       cols,

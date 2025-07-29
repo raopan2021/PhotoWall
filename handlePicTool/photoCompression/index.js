@@ -54,7 +54,7 @@ async function getImageFiles(dir) {
  * 处理图片并显示进度条
  */
 async function processImages() {
-  console.log("=== 图片压缩工具开始运行 ===");
+  console.log("\n\n=== 图片压缩工具开始运行 ===");
 
   try {
     // 获取所有图片文件
@@ -91,7 +91,7 @@ async function processImages() {
     updateProgress();
 
     // 分批处理以避免内存问题，8核心16线程，每次处理*2=32个任务
-    const batchSize = pool.maxThreads * 10;
+    const batchSize = pool.maxThreads * 2;
     for (let i = 0; i < tasks.length; i += batchSize) {
       const batch = tasks.slice(i, i + batchSize);
       const results = await Promise.all(batch.map(task => pool.run(task)));
@@ -117,7 +117,7 @@ async function processImages() {
     console.log(`总计: ${totalTasks} 个任务`);
     console.log(`成功: ${successCount}`);
     console.log(`跳过: ${skippedCount}`);
-    console.log(`失败: ${failCount}`);
+    console.log(`失败: ${failCount}\n`);
   }
   catch (error) {
     console.error("\n处理过程中发生错误:", error);

@@ -165,7 +165,7 @@ const App: React.FC = () => {
         }}
       >
         <img
-          src={`${import.meta.env.BASE_URL}/photos/${isOriginPic ? "origin" : "mid"}/${imageInfo?.fullName}`}
+          src={`${import.meta.env.BASE_URL}/photos/${isOriginPic ? "origin" : "mid"}/${imageInfo?.fileName}.webp`}
           alt={imageInfo?.fullName}
           width={imgSize.width}
           height={imgSize.height}
