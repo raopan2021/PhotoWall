@@ -1,7 +1,7 @@
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import { RouterProvider } from "react-router";
 import router from "@/router";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   colorSchemes: {

@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
-import dayjs from "dayjs";
-import { ImageList, ImageListItem, Skeleton, Grid } from "@mui/material";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
+import { Grid, ImageList, ImageListItem, Skeleton } from "@mui/material";
+import dayjs from "dayjs";
+import React, { useEffect, useState } from "react";
 
 import photoDataUrl from "@/assets/info.json?url";
 import usePicStore from "@/stores/image";
 
 // 判断是否为横向图片
-const isLandscape = (photo: Image.Info) => {
-  if (!photo.dimensions) return false;
+function isLandscape(photo: Image.Info) {
+  if (!photo.dimensions)
+    return false;
   return photo.dimensions.width > photo.dimensions.height;
-};
+}
 
 // 获取图片布局参数
-const getPhotoLayout = (photo: Image.Info) => {
+function getPhotoLayout(photo: Image.Info) {
   const landscape = isLandscape(photo);
   // 放大状态下的布局
   if (photo.featured) {
@@ -21,7 +22,7 @@ const getPhotoLayout = (photo: Image.Info) => {
   }
   // 默认布局
   return landscape ? { cols: 2, rows: 1 } : { cols: 1, rows: 1 };
-};
+}
 
 function groupByDate(items: any[]) {
   return items.reduce((groups, item) => {
@@ -42,7 +43,8 @@ function srcset(image: string, size: number, rows = 1, cols = 1, originalWidth?:
         src: `${image}?h=${rows * size}&auto=format`,
         srcSet: `${image}?h=${rows * size}&auto=format&dpr=2 2x`,
       };
-    } else {
+    }
+    else {
       return {
         src: `${image}?w=${cols * size}&auto=format`,
         srcSet: `${image}?w=${cols * size}&auto=format&dpr=2 2x`,
@@ -57,8 +59,8 @@ function srcset(image: string, size: number, rows = 1, cols = 1, originalWidth?:
 }
 
 const App: React.FC = () => {
-  const { dates, initDates, datephotos, initDatesPhotos, setDatePhotoFeatured, exchangeShowPicDrawer, setImageInfo } =
-    usePicStore();
+  const { dates, initDates, datephotos, initDatesPhotos, setDatePhotoFeatured, exchangeShowPicDrawer, setImageInfo }
+    = usePicStore();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -70,9 +72,11 @@ const App: React.FC = () => {
 
         initDates(Object.keys(groupedData));
         initDatesPhotos(groupedData);
-      } catch (error) {
+      }
+      catch (error) {
         console.error("Error loading photo data:", error);
-      } finally {
+      }
+      finally {
         setLoading(false);
       }
     };
@@ -88,7 +92,7 @@ const App: React.FC = () => {
     return (
       <div className="flex justify-center items-start h-[100vh] px-[300px] py-[10px]">
         <Grid container wrap="wrap" spacing={2}>
-          {Array.from(new Array(30)).map((_, index) => (
+          {Array.from(Array.from({ length: 30 })).map((_, index) => (
             <Skeleton key={index} variant="rectangular" width={150} height={200} />
           ))}
         </Grid>
@@ -98,9 +102,9 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col">
-      {dates.map((date) => (
+      {dates.map(date => (
         <div
-          className="box-border flex gap-[10px] w-full sm:px-[50px] md:px-[100px] lg:px-[150px] xl:px-[200px] 2xl:px-[300px] my-[20px]"
+          className="flex w-full box-border gap-[10px] sm:px-[50px] md:px-[100px] lg:px-[150px] xl:px-[200px] 2xl:px-[300px] my-[20px]"
           key={date}
         >
           <div className="w-auto text-right pr-[30px]">{dayjs(date).format("YYYY-MM-DD")}</div>
@@ -119,7 +123,7 @@ const App: React.FC = () => {
                       rows,
                       cols,
                       photo?.dimensions?.width,
-                      photo?.dimensions?.height
+                      photo?.dimensions?.height,
                     )}
                     alt={photo.fileName}
                     loading="lazy"

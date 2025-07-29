@@ -1,6 +1,6 @@
 import React from "react";
-import TimeLine from "@/components/timeLine/index.tsx";
 import ImageDrawer from "@/components/imageDrawer/index.tsx";
+import TimeLine from "@/components/timeLine/index.tsx";
 
 const Home: React.FC = () => (
   <>

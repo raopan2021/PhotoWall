@@ -1,10 +1,10 @@
 // utils/image-compressor.js
-import { existsSync, mkdirSync, readdirSync, unlinkSync } from "fs";
-import { promises as fsPromises } from "fs";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
+import { existsSync, mkdirSync } from "node:fs";
+import { promises as fsPromises } from "node:fs";
+import os from "node:os";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import Piscina from "piscina";
-import os from "os";
 
 // 获取当前文件所在目录
 const __filename = fileURLToPath(import.meta.url);
@@ -40,10 +40,11 @@ async function getImageFiles(dir) {
   try {
     console.log(dir);
     const files = await fsPromises.readdir(dir);
-    return files.filter((file) =>
-      /\.(jpg|jpeg|png|webp|gif|tiff)$/i.test(file)
+    return files.filter(file =>
+      /\.(jpg|jpeg|png|webp|gif|tiff)$/i.test(file),
     );
-  } catch (err) {
+  }
+  catch (err) {
     console.error("读取目录失败:", dir, err);
     return [];
   }
@@ -82,7 +83,7 @@ async function processImages() {
     function updateProgress() {
       const progress = ((processed / totalTasks) * 100).toFixed(1);
       process.stdout.write(
-        `\r处理进度: ${progress}% | 成功: ${successCount} | 跳过: ${skippedCount} | 失败: ${failCount}`
+        `\r处理进度: ${progress}% | 成功: ${successCount} | 跳过: ${skippedCount} | 失败: ${failCount}`,
       );
     }
 
@@ -93,16 +94,18 @@ async function processImages() {
     const batchSize = pool.maxThreads * 10;
     for (let i = 0; i < tasks.length; i += batchSize) {
       const batch = tasks.slice(i, i + batchSize);
-      const results = await Promise.all(batch.map((task) => pool.run(task)));
+      const results = await Promise.all(batch.map(task => pool.run(task)));
 
       // 更新统计
       results.forEach((result) => {
         processed++;
         if (result.skipped) {
           skippedCount++;
-        } else if (result.success) {
+        }
+        else if (result.success) {
           successCount++;
-        } else {
+        }
+        else {
           failCount++;
           console.error(`\n处理失败: ${result.file} - ${result.error}`);
         }
@@ -115,9 +118,11 @@ async function processImages() {
     console.log(`成功: ${successCount}`);
     console.log(`跳过: ${skippedCount}`);
     console.log(`失败: ${failCount}`);
-  } catch (error) {
+  }
+  catch (error) {
     console.error("\n处理过程中发生错误:", error);
-  } finally {
+  }
+  finally {
     await pool.destroy(); // 关闭线程池
   }
 }

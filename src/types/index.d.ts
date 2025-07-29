@@ -42,7 +42,7 @@ declare namespace Image {
   }
 
   interface AppState {
-    currentMode: 'waterfall' | 'ppt';
+    currentMode: "waterfall" | "ppt";
     isDarkMode: boolean;
   }
 }

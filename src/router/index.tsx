@@ -16,7 +16,7 @@ const router = createBrowserRouter(
   ],
   {
     basename: "/PhotoWall", // 所有路由自动添加 /PhotoWall 前缀
-  }
+  },
 );
 
 export default router;

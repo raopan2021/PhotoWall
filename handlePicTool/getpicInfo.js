@@ -2,12 +2,12 @@
  * 获取图片信息工具 - 优化版
  * 使用 sharp 和 exifr 库提取图片元数据和EXIF信息
  */
-import { existsSync, promises as fsPromises } from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import { existsSync, promises as fsPromises } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import exifr from "exifr";
 import fse from "fs-extra";
 import sharp from "sharp";
-import exifr from "exifr";
 
 // 获取当前模块路径
 const __filename = fileURLToPath(import.meta.url);
@@ -35,9 +35,10 @@ async function extractDominantColors(filePath, count = 3) {
 
     return Array.from(
       { length: count },
-      (_, i) => `rgb(${dominant.r[i]}, ${dominant.g[i]}, ${dominant.b[i]})`
+      (_, i) => `rgb(${dominant.r[i]}, ${dominant.g[i]}, ${dominant.b[i]})`,
     );
-  } catch (err) {
+  }
+  catch (err) {
     console.error(`提取主色失败 [${path.basename(filePath)}]:`, err.message);
     return [];
   }
@@ -49,7 +50,8 @@ async function extractDominantColors(filePath, count = 3) {
  * @returns {Promise<object>} 位置信息对象
  */
 async function getLocationInfo(gps) {
-  if (!gps) return {};
+  if (!gps)
+    return {};
 
   // 实际应用中应调用地理编码API
   return {
@@ -124,7 +126,8 @@ async function processImage(file) {
         format: metadata.format,
       },
     };
-  } catch (err) {
+  }
+  catch (err) {
     console.error(`处理图片失败 [${file}]:`, err.message);
     return null;
   }
@@ -140,10 +143,11 @@ async function getImageFiles(dir) {
     console.log(dir);
 
     const files = await fsPromises.readdir(dir);
-    return files.filter((file) =>
-      /\.(jpg|jpeg|png|webp|gif|tiff)$/i.test(file)
+    return files.filter(file =>
+      /\.(jpg|jpeg|png|webp|gif|tiff)$/i.test(file),
     );
-  } catch (err) {
+  }
+  catch (err) {
     console.error("读取目录失败:", dir, err);
     return [];
   }
@@ -170,7 +174,8 @@ export async function extractImageInfo() {
     await fse.writeJson(INFO_FILE, results, { spaces: 2 });
     console.log(`图片信息已保存至: ${INFO_FILE}`);
     return results;
-  } catch (err) {
+  }
+  catch (err) {
     console.error("处理图片信息时出错:", err);
     throw err;
   }

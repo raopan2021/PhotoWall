@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import react from "@vitejs/plugin-react-swc";
+import autoprefixer from "autoprefixer";
 
-import UnoCSS from 'unocss/vite'
-import autoprefixer from 'autoprefixer'
+import UnoCSS from "unocss/vite";
+import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -20,9 +20,9 @@ export default defineConfig({
   // 添加alias
   resolve: {
     alias: {
-      '@': '/src',
-    }
+      "@": "/src",
+    },
   },
 
-  base: '/PhotoWall/', // 设置基础路径为相对路径，用于设置 GitHub Pages
-})
+  base: "/PhotoWall/", // 设置基础路径为相对路径，用于设置 GitHub Pages
+});

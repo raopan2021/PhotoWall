@@ -1,12 +1,13 @@
-import RadioGroup from "@mui/material/RadioGroup";
-import Radio from "@mui/material/Radio";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import { useColorScheme } from "@mui/material/styles";
 
 export default () => {
   const { mode, setMode } = useColorScheme();
-  if (!mode) return null;
+  if (!mode)
+    return null;
 
   return (
     <FormControl>
@@ -15,9 +16,8 @@ export default () => {
         name="theme-toggle"
         row
         value={mode}
-        onChange={(event) =>
-          setMode(event.target.value as "system" | "light" | "dark")
-        }
+        onChange={event =>
+          setMode(event.target.value as "system" | "light" | "dark")}
       >
         <FormControlLabel value="system" control={<Radio />} label="System" />
         <FormControlLabel value="light" control={<Radio />} label="Light" />

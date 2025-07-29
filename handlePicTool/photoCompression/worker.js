@@ -1,11 +1,11 @@
+import { promises } from "node:fs";
 // utils/image-worker.js
-import { join, extname } from "path";
-import { promises } from "fs";
+import { extname, join } from "node:path";
 import sharp from "sharp";
 
 /**
  * 图片处理工作线程
- * @param {Object} task - 处理任务
+ * @param {object} task - 处理任务
  * @param {string} task.file - 文件名
  * @param {'min'|'mid'} task.taskType - 处理类型
  * @param {string} task.originDir - 原始目录
@@ -21,14 +21,16 @@ export default async function processImage(task) {
     try {
       await promises.access(outputPath);
       return { skipped: true, file };
-    } catch {
+    }
+    catch {
       // 文件不存在，继续处理
     }
 
     if (taskType === "min") {
       // 小尺寸压缩 (宽度320px)
       await sharp(inputPath).resize({ width: 320 }).toFile(outputPath);
-    } else {
+    }
+    else {
       // 中等质量压缩 (保持原尺寸)
       const fileExt = extname(file).toLowerCase();
       const processor = sharp(inputPath);
@@ -54,7 +56,8 @@ export default async function processImage(task) {
     }
 
     return { success: true, file };
-  } catch (error) {
+  }
+  catch (error) {
     return { success: false, file, error: error.message };
   }
 }

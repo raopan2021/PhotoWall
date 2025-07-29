@@ -1,7 +1,7 @@
 // utils/contrastColor.ts
-export const getContrastColor = (imgElement: HTMLImageElement) => {
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+export function getContrastColor(imgElement: HTMLImageElement) {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
   // 设置 Canvas 尺寸与图片一致
   canvas.width = imgElement.naturalWidth;
@@ -28,7 +28,7 @@ export const getContrastColor = (imgElement: HTMLImageElement) => {
   const { data } = imgData;
 
   // 计算平均颜色
-  let totalR = 0, totalG = 0, totalB = 0;
+  let totalR = 0; let totalG = 0; let totalB = 0;
   for (let i = 0; i < data.length; i += 4) {
     totalR += data[i];
     totalG += data[i + 1];
@@ -43,5 +43,5 @@ export const getContrastColor = (imgElement: HTMLImageElement) => {
   // 使用 WCAG 2.0 对比度公式
   const brightness = (avgR * 299 + avgG * 587 + avgB * 114) / 1000;
 
-  return brightness > 180 ? 'black' : 'white';
-};
+  return brightness > 180 ? "black" : "white";
+}

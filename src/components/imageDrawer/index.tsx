@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
+import FlipIcon from "@mui/icons-material/Flip";
+import RawOnIcon from "@mui/icons-material/RawOn";
+import SettingsIcon from "@mui/icons-material/Settings";
+import { Box, Drawer, Popover, Switch } from "@mui/material";
+
 import dayjs from "dayjs";
 import Fraction from "fraction.js";
-import { getContrastColor } from "@/utils/contrastColor";
-
-import { Drawer, Box, Switch, Popover, Button } from "@mui/material";
-import RawOnIcon from "@mui/icons-material/RawOn";
-import FlipIcon from "@mui/icons-material/Flip";
-import SettingsIcon from "@mui/icons-material/Settings";
-
+import React, { useEffect, useState } from "react";
 import usePicStore from "@/stores/image";
 
+import { getContrastColor } from "@/utils/contrastColor";
+
 const App: React.FC = () => {
-  const { showPicDrawer, exchangeShowPicDrawer, clearMidPic, imageInfo, setImageInfo, dates, datephotos } =
-    usePicStore();
+  const { showPicDrawer, exchangeShowPicDrawer, clearMidPic, imageInfo, setImageInfo, dates, datephotos }
+    = usePicStore();
   const [imgSize, setImgSize] = useState({ width: 0, height: 0 });
 
   // 在 img 的 onLoad 中确保尺寸只设置一次
   const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    if (imgSize.width !== 0) return; // 避免重复设置
+    if (imgSize.width !== 0)
+      return; // 避免重复设置
     const img = e.currentTarget;
     const width = imageInfo?.dimensions?.width || img.naturalWidth + 200;
     const height = imageInfo?.dimensions?.height || img.naturalHeight;
@@ -49,12 +50,13 @@ const App: React.FC = () => {
   const getPhotosByDate = (date: string) => datephotos[date] || [];
   // 查找当前照片在数组中的索引
   const findCurrentIndex = (photos: Image.Info[], fullName: string) =>
-    photos.findIndex((photo) => photo.fullName === fullName);
+    photos.findIndex(photo => photo.fullName === fullName);
   const prev = () => {
     const currentDate = dayjs(imageInfo?.dateTime).format("YYYY-MM-DD");
     const currentPhotos = getPhotosByDate(currentDate);
     const currentIndex = findCurrentIndex(currentPhotos, imageInfo?.fullName);
-    if (currentIndex === -1) return;
+    if (currentIndex === -1)
+      return;
     // 如果不是第一张
     if (currentIndex > 0) {
       setImageInfoWithTransition(currentPhotos[currentIndex - 1]);
@@ -65,13 +67,15 @@ const App: React.FC = () => {
     const prevDateIndex = currentDateIndex > 0 ? currentDateIndex - 1 : dates.length - 1;
     const prevDate = dates[prevDateIndex];
     const prevPhotos = getPhotosByDate(prevDate);
-    if (prevPhotos.length > 0) setImageInfoWithTransition(prevPhotos[prevPhotos.length - 1]);
+    if (prevPhotos.length > 0)
+      setImageInfoWithTransition(prevPhotos[prevPhotos.length - 1]);
   };
   const next = () => {
     const currentDate = dayjs(imageInfo?.dateTime).format("YYYY-MM-DD");
     const currentPhotos = getPhotosByDate(currentDate);
     const currentIndex = findCurrentIndex(currentPhotos, imageInfo?.fullName);
-    if (currentIndex === -1) return;
+    if (currentIndex === -1)
+      return;
     // 如果不是最后一张
     if (currentIndex < currentPhotos.length - 1) {
       setImageInfoWithTransition(currentPhotos[currentIndex + 1]);
@@ -82,12 +86,15 @@ const App: React.FC = () => {
     const nextDateIndex = currentDateIndex < dates.length - 1 ? currentDateIndex + 1 : 0;
     const nextDate = dates[nextDateIndex];
     const nextPhotos = getPhotosByDate(nextDate);
-    if (nextPhotos.length > 0) setImageInfoWithTransition(nextPhotos[0]);
+    if (nextPhotos.length > 0)
+      setImageInfoWithTransition(nextPhotos[0]);
   };
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft")
+        prev();
+      if (e.key === "ArrowRight")
+        next();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -107,7 +114,8 @@ const App: React.FC = () => {
       const color = getContrastColor(img);
 
       setTextColor(color);
-    } catch (error) {
+    }
+    catch (error) {
       console.error("颜色计算失败:", error);
       setTextColor("white"); // 降级方案
     }
@@ -135,10 +143,10 @@ const App: React.FC = () => {
       onClose={onClose}
       anchor="right"
       sx={{
-        height: "100vh",
-        width: imgSize.width ? `min(${drawerWidth}px, 80vw)` : "auto",
-        transition: "width 0.3s ease-out", // 添加平滑过渡效果
-        overflow: "visible",
+        "height": "100vh",
+        "width": imgSize.width ? `min(${drawerWidth}px, 80vw)` : "auto",
+        "transition": "width 0.3s ease-out", // 添加平滑过渡效果
+        "overflow": "visible",
         "& .MuiDrawer-paper": {
           overflow: "visible",
           transition: "width 0.3s ease-out",
@@ -148,7 +156,7 @@ const App: React.FC = () => {
       className="bg-transparent"
     >
       <Box
-        className="relative flex justify-center items-start h-full bg-transparent"
+        className="relative flex justify-center items-start bg-transparent h-full"
         role="presentation"
         sx={{
           overflow: "visible",
@@ -199,7 +207,7 @@ const App: React.FC = () => {
           }}
         >
           <div
-            className="py-[20px] text-[18px] flex flex-col gap-[30px] justify-start items-end text-right"
+            className="flex flex-col text-right py-[20px] text-[18px] gap-[30px] justify-start items-end"
             style={{
               color: textColor,
               textShadow: textColor === "white" ? "0 2px 4px rgba(0,0,0,0.8)" : "0 2px 4px rgba(255,255,255,0.8)",
@@ -216,7 +224,9 @@ const App: React.FC = () => {
             </div>
 
             <span className="flex gap-[10px] justify-center items-center">
-              <RawOnIcon /> 原图
+              <RawOnIcon />
+              {" "}
+              原图
               <Switch checked={isOriginPic} onChange={() => setIsOriginPic(!isOriginPic)} />
             </span>
 
@@ -226,7 +236,8 @@ const App: React.FC = () => {
                   transform: flip ? "scaleX(-1)" : "none", // 水平翻转
                   transition: "transform 0.3s ease", // 可选：添加翻转动画
                 }}
-              />{" "}
+              />
+              {" "}
               镜像
               <Switch checked={flip} onChange={() => setFlip(!flip)} />
             </span>
@@ -234,7 +245,7 @@ const App: React.FC = () => {
             <div className="flex flex-col gap-[10px] justify-start items-end">{imageInfo?.fullName}</div>
 
             <div className="flex flex-col gap-[10px] justify-start items-end">
-              {[imageInfo?.camera?.make, imageInfo?.camera?.model, imageInfo?.camera?.lens].map((item) => (
+              {[imageInfo?.camera?.make, imageInfo?.camera?.model, imageInfo?.camera?.lens].map(item => (
                 <span className="block" key={item}>
                   {item}
                 </span>
@@ -243,11 +254,11 @@ const App: React.FC = () => {
 
             <div className="flex flex-col gap-[10px] justify-start items-end">
               {[
-                new Fraction(imageInfo?.exposure?.exposureTime).toFraction(true) + "s",
-                "ƒ/" + imageInfo?.exposure?.fNumber,
-                "ISO " + imageInfo?.exposure?.iso,
-                imageInfo?.exposure?.focalLength + "mm",
-              ].map((item) => (
+                `${new Fraction(imageInfo?.exposure?.exposureTime).toFraction(true)}s`,
+                `ƒ/${imageInfo?.exposure?.fNumber}`,
+                `ISO ${imageInfo?.exposure?.iso}`,
+                `${imageInfo?.exposure?.focalLength}mm`,
+              ].map(item => (
                 <span className="block" key={item}>
                   {item}
                 </span>
